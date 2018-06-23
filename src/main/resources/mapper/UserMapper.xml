@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mybatis.dao.UserDao">
+    <resultMap id="BaseResult" type="com.mybatis.model.User">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="address" column="address"/>
+        <result property="city" column="city"/>
+    </resultMap>
+    <select id="show" resultMap="BaseResult" >
+        select * from user
+    </select>
+    <select id="searchById" resultMap="BaseResult" parameterType="java.lang.Integer">
+        select * from user where id=#{id}
+    </select>
+    <insert id="insert" parameterType="com.mybatis.model.User">
+        insert into user values (#{id},#{name},#{address},#{city})
+    </insert>
+    <update id="update" parameterType="com.mybatis.model.User">
+        update user set
+        <if test="name != null">
+            name=#{name},
+        </if>
+        <if test="address !=null">
+            address=#{address},
+        </if>
+        <if test="city !=null">
+            city=#{city}
+        </if>
+         where id=#{id}
+    </update>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete from user where id=#{id}
+    </delete>
+</mapper>
